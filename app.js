@@ -36,7 +36,7 @@ wsserver.on('connection', function(ws) {
     });
   });
   ws.on('close', function() {
-    conns.splice(downstreams.indexOf(ws), 1);
+    conns.splice(conns.indexOf(ws), 1);
   });
 });
 
