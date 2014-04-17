@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "ws": "*",
-    "express": ">=3.2.0"
+    "express": ">=3.2.0 && < 4.0.0"
   },
   "engines": {
     "node": "0.10.*",
