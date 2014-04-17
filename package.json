@@ -7,7 +7,9 @@
   },
   "dependencies": {
     "ws": "*",
-    "express": ">=3.2.0"
+    "express": ">=3.2.0",
+    "morgan":"*",
+    "errorhandler":"*",
   },
   "engines": {
     "node": "0.10.*",
