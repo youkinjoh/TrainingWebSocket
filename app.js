@@ -29,12 +29,9 @@ var conns = [];
 wsserver.on('connection', function(ws) {
   conns.push(ws);
   ws.on('message', function(message) {
-    console.log(conns.length);
-    console.log("received message:" + message);    
-    conns.forEach(function(conn,i) {
+    conns.forEach(function(conn) {
         try {
           if (conn !== ws) {
-            console.log(conn);
             conn.send(message);
           }
         } catch(e) {
