@@ -26,13 +26,15 @@ var wsserver = new WebSocketServer({
 });
 
 var conns = [];
-
 wsserver.on('connection', function(ws) {
   conns.push(ws);
   ws.on('message', function(message) {
-    conns.forEach(function(conn) {
+    console.log(conns.length);
+    console.log("received message:" + message);    
+    conns.forEach(function(conn,i) {
         try {
           if (conn !== ws) {
+            console.log(conn);
             conn.send(message);
           }
         } catch(e) {
