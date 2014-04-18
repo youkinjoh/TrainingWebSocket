@@ -9,13 +9,13 @@ var wsClient = {
     init: function(socket){
         this.ws = socket;
         this.ws.onopen = function() {
-            this.ws.send('login anonymous');
+            socket.send('login anonymous');
         };
         this.ws.onmessage = function(msg) {
             changeView(msg.data);
         };
         this.ws.onclose = function() {
-            this.ws.send('logout anonymous');
+            socket.send('logout anonymous');
         };
     },
     sendMessage: function(msg,callback){
