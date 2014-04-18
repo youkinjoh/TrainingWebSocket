@@ -1,23 +1,29 @@
 var wsClient = {
+    /**wsClinet
+    *ws:ウェブソケットインスタンスの代入先
+    *init:ws内での各種イベント時のコールバックで呼び出される函数の定義
+    *sendMessage:引数のテキストをウェブソケットサーバに送信する
+    *close:接続終了
+    */
+    ws: null,
     init: function(socket){
-        alert('oass');
-        this.socket = socket;
-        socket.onopen = function() {
-            this.socket.send('login anonymous');
+        this.ws = socket;
+        this.ws.onopen = function() {
+            this.ws.send('login anonymous');
         };
-        socket.onmessage = function(msg) {
-            this.changeView(msg.data);
+        this.ws.onmessage = function(msg) {
+            changeView(msg.data);
         };
-        socket.onclose = function() {
-            this.socket.send('logout anonymous');
+        this.ws.onclose = function() {
+            this.ws.send('logout anonymous');
         };
     },
     sendMessage: function(msg,callback){
-        this.socket.send(msg);
+        this.ws.send(msg);
         callback(msg);
     },
     close: function(socket){
-        socket.close();
+        this.ws.close();
     }
 };
 
