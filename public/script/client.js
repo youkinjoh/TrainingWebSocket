@@ -1,45 +1,43 @@
-var socket;
-
-var socketClient = {
-    init: function(){
-        socket.onopen = function(){
-            socket.send("login anonymous");
+var wsClient = {
+    init: function(socket){
+        alert('oass');
+        this.socket = socket;
+        socket.onopen = function() {
+            this.socket.send('login anonymous');
         };
-        socket.onmessage = function(msg){
-            changeView(msg.data);
+        socket.onmessage = function(msg) {
+            this.changeView(msg.data);
         };
-        socket.onclose = function(){
-            socket.send("logout anonymous");
+        socket.onclose = function() {
+            this.socket.send('logout anonymous');
         };
     },
-    sendMessage: function(msg){
-        socket.send(msg);
-        changeView(msg);
+    sendMessage: function(msg,callback){
+        this.socket.send(msg);
+        callback(msg);
     },
-    close: function(){
+    close: function(socket){
         socket.close();
     }
 };
 
 var sendBtnClick = function(){
     var inputText = document.getElementById('input_text').value;
-    socketClient.sendMessage(inputText);
+    wsClient.sendMessage(inputText,changeView);
 };
 
 var entryPoint = function(){
-    var host = "ws://localhost:3000";
-    socket = new WebSocket(host);
-    var sendBtn = document.getElementById("send_button");
-    sendBtn.addEventListener("click",sendBtnClick);
-    socketClient.init();
+    var host = 'ws://localhost:3000';
+    var socket = new WebSocket(host);
+    var sendBtn = document.getElementById('send_button');
+    sendBtn.addEventListener('click',sendBtnClick,true);
+    wsClient.init(socket);
 };
-
-
 
 var changeView = function(msg){
     var addElement = document.createElement('div');
-    addElement.innerHTML = msg;
+    addElement.appendChild(document.createTextNode(msg));
     document.getElementById('chatlog').appendChild(addElement);
 };
 
-entryPoint();
+document.getElementById("contents").addEventListener('load',entryPoint,true);

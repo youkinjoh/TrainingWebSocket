@@ -3,14 +3,14 @@
 <head>
     <title>WebSocketChat?</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="./styles/style.css"/>
+    <link rel="stylesheet" href="./styles/style.css" />
 </head>
-<body>
-    <div id="chatlog"></div>
+<body id="contents">
+    <div id="chatlog" class="output_contents"></div>
     <div id="input_area">
-        <input type="text" id="input_text"/>
-        <input type="button" id="send_button" value="Send"/>
+        <input type="text" id="input_text" class="input_contents" />
+        <input type="button" id="send_button" class="submit_contents" value="Send" />
     </div>
+    <script type="text/javascript" src="./script/client.js"></script>
 </body>
 </html>    
-<script type ="text/javascript" src="./script/client.js"></script>
