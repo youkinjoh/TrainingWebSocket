@@ -23,6 +23,12 @@ var wsClient = {
         this.ws.send(msg);
         changeView(msg);
     },
+    loginMessage: function(userName) {
+        this.ws.send(userName+' is login');
+    },
+    logoutMessage: function() {
+        this.ws.send(userName+'is logout');
+    },
     close: function(socket) {
         this.ws.close();
     }
@@ -58,6 +64,10 @@ var entryPoint = function(){
     var host = 'ws://localhost:3000';
     var sendBtn = document.getElementById('send_button');
     sendBtn.addEventListener('click',sendBtnClick,true);
+    var loginBtn = document.getElementById('login_button');
+    loginBtn.addEventListener('click',loginBtnClick,true);
+    var logoutBtn = document.getElementById('logout_button');
+    logoutBtn.addEventListener('click',logoutBtnClick,true);
     wsClient.init(host, {
          open   : joinAnonymous
         ,message: changeView
