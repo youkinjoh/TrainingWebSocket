@@ -6,44 +6,67 @@ var wsClient = {
     *close:接続終了
     */
     ws: null,
-    init: function(socket){
-        this.ws = socket;
-        this.ws.onopen = function() {
-            socket.send('login anonymous');
-        };
-        this.ws.onmessage = function(msg) {
-            changeView(msg.data);
-        };
-        this.ws.onclose = function() {
-            socket.send('logout anonymous');
-        };
+    init: function(url, handlers) {
+        handlers = handlers || {};
+        this.ws = new WebSocket(url);
+        if ('message' in handlers) {
+            this.ws.addEventListener('message',handlers['message'],true);
+        }
+        if('open' in handlers){
+            this.ws.addEventListener('open',handlers['open'],true);
+        }
+        if('close' in handlers){
+            this.ws.addEventListener('close',handlers['close'],true);
+        }
     },
-    sendMessage: function(msg,callback){
+    sendMessage: function(msg) {
         this.ws.send(msg);
-        callback(msg);
+        changeView(msg);
     },
-    close: function(socket){
+    close: function(socket) {
         this.ws.close();
     }
 };
 
 var sendBtnClick = function(){
     var inputText = document.getElementById('input_text').value;
-    wsClient.sendMessage(inputText,changeView);
+    wsClient.sendMessage(inputText);
 };
 
-var entryPoint = function(){
-    var host = 'ws://localhost:3000';
-    var socket = new WebSocket(host);
-    var sendBtn = document.getElementById('send_button');
-    sendBtn.addEventListener('click',sendBtnClick,true);
-    wsClient.init(socket);
+var loginBtnClick = function(){
+    var inputText = document.getElementById('login_name').value;
+    wsClient.sendMessage(inputText);
 };
+var logoutBtnClick = function(){
+    wsClient.sendMessage('Quit...');
+}
 
 var changeView = function(msg){
     var addElement = document.createElement('div');
     addElement.appendChild(document.createTextNode(msg));
     document.getElementById('chatlog').appendChild(addElement);
 };
+
+var joinAnonymous = function(event){
+    event.target.send('Login Anonymous');
+};
+var fromleaveAnonymous = function(ws){
+    event.target.send('Logout Anonymous');
+};
+
+var entryPoint = function(){
+    var host = 'ws://localhost:3000';
+    var sendBtn = document.getElementById('send_button');
+    sendBtn.addEventListener('click',sendBtnClick,true);
+    wsClient.init(host, {
+         open   : joinAnonymous
+        ,message: changeView
+        ,close  : fromleaveAnonymous
+    });
+};
+
+
+
+
 
 document.getElementById("contents").addEventListener('load',entryPoint,true);
