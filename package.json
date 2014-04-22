@@ -8,7 +8,7 @@
   "dependencies": {
     "ws": "*",
     "express": ">=3.2.0",
-      "morgan":"*",
+    "morgan":"*",
     "errorhandler":"*"
   },
   "engines": {

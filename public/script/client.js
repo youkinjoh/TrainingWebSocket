@@ -13,10 +13,10 @@ var wsClient = {
         if ('message' in handlers) {
             this.ws.addEventListener('message',handlers['message'],true);
         }
-        if('open' in handlers) {
+        if ('open' in handlers) {
             this.ws.addEventListener('open',handlers['open'],true);
         }
-        if('close' in handlers) {
+        if ('close' in handlers) {
             this.ws.addEventListener('close',handlers['close'],true);
         }
     },
@@ -46,7 +46,7 @@ var closeWs = function() {
 };
 
 var changeView = function(msg) {
-    if(msg.type == 'message') {
+    if (msg.type == 'message') {
         msg = msg.data;
     }
     var addElement = document.createElement('div');
@@ -56,9 +56,6 @@ var changeView = function(msg) {
 
 var joinAnonymous = function(event) {
     event.target.send('Login Anonymous');
-};
-var fromleaveAnonymous = function(event) {
-    event.target.send('Logout Anonymous');
 };
 
 var entryPoint = function() {
@@ -70,9 +67,10 @@ var entryPoint = function() {
     var logoutBtn = document.getElementById('logout_button');
     logoutBtn.addEventListener('click',logoutBtnClick,true);
     wsClient.init(host, {
-         open   : joinAnonymous
-        ,message: changeView
-        ,close  : fromleaveAnonymous
+         open       : joinAnonymous
+        ,message    : changeView
+        ,close      : closeWs
+        ,sendMessage: changeView
     });
 };
 
