@@ -6,6 +6,7 @@ var wsClient = {
     *close:接続終了
     */
     ws: null,
+    loginusername: null,
     init: function(url, handlers) {
         handlers = handlers || {};
         this.ws = new WebSocket(url);
@@ -22,15 +23,6 @@ var wsClient = {
     sendMessage: function(msg) {
         this.ws.send(msg);
         changeView(msg);
-    },
-    loginMessage: function(userName) {
-        this.ws.send(userName+' is login');
-    },
-    logoutMessage: function() {
-        this.ws.send(userName+'is logout');
-    },
-    close: function(socket) {
-        this.ws.close();
     }
 };
 
@@ -41,13 +33,22 @@ var sendBtnClick = function(){
 
 var loginBtnClick = function(){
     var inputText = document.getElementById('login_name').value;
-    wsClient.sendMessage(inputText);
+    wsClient.sendMessage(inputText+' login');
 };
+
 var logoutBtnClick = function(){
     wsClient.sendMessage('Quit...');
-}
+};
+
+var closeWs = function(){
+    wsClient.sendMessage('anonymous Quit');
+    wsClient.ws.close();
+};
 
 var changeView = function(msg){
+    if(msg.type == 'message'){
+        msg = msg.data;
+    }
     var addElement = document.createElement('div');
     addElement.appendChild(document.createTextNode(msg));
     document.getElementById('chatlog').appendChild(addElement);
@@ -56,7 +57,7 @@ var changeView = function(msg){
 var joinAnonymous = function(event){
     event.target.send('Login Anonymous');
 };
-var fromleaveAnonymous = function(ws){
+var fromleaveAnonymous = function(event){
     event.target.send('Logout Anonymous');
 };
 
@@ -71,7 +72,7 @@ var entryPoint = function(){
     wsClient.init(host, {
          open   : joinAnonymous
         ,message: changeView
-        ,close  : fromleaveAnonymous
+        ,close  : closeWs
     });
 };
 
