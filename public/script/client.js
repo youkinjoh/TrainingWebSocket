@@ -19,21 +19,23 @@ var wsClient = {
         if ('close' in handlers) {
             this.ws.addEventListener('close',handlers['close'],true);
         }
+        
     },
-    sendMessage: function(msg) {
+    sendMessage: function(msg,func) {
         this.ws.send(msg);
-        changeView(msg);
+        //TODO ChangeViewをここからなくして疎結合にすること
+        func(msg);
     }
 };
 
 var sendBtnClick = function() {
     var inputText = document.getElementById('input_text').value;
-    wsClient.sendMessage(inputText);
+    wsClient.sendMessage(inputText,changeView);
 };
 
 var loginBtnClick = function() {
     var inputText = document.getElementById('login_name').value;
-    wsClient.sendMessage(inputText+' login');
+    wsClient.sendMessage(inputText + ' login');
 };
 
 var logoutBtnClick = function() {
