@@ -1,4 +1,4 @@
-.output_contents{
+.output_contents {
     font-size:12px;
     width:500px;
     height:300px;
@@ -6,11 +6,11 @@
     color:white;
     overflow:scroll;
 }
-.input_contents{
+.input_contents {
     width:400px;
     height:30px;
 }
-.submit_contents{
+.submit_contents {
     width:100px;
     height:50px;
 }
