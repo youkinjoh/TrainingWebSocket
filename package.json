@@ -8,8 +8,8 @@
   "dependencies": {
     "ws": "*",
     "express": ">=3.2.0",
-    "morgan":"*",
-    "errorhandler":"*",
+      "morgan":"*",
+    "errorhandler":"*"
   },
   "engines": {
     "node": "0.10.*",
