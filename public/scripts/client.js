@@ -23,13 +23,16 @@ var wsClient = {
     },
     sendMessage: function(msg, func) {
         this.ws.send(msg);
-        //TODO ChangeViewをここからなくして疎結合にすること
         func(msg);
     }
 };
 
 var sendBtnClick = function() {
     var inputText = document.getElementById('input_text').value;
+    if (inputText == '') {
+        alert('Please input message!');
+        return;
+    }
     wsClient.sendMessage(inputText, changeView);
 };
 
@@ -65,9 +68,9 @@ var entryPoint = function() {
     var sendBtn = document.getElementById('send_button');
     sendBtn.addEventListener('click', sendBtnClick, true);
     var loginBtn = document.getElementById('login_button');
-    loginBtn.addEventListener('click', loginBtnClick,true);
+    loginBtn.addEventListener('click', loginBtnClick, true);
     var logoutBtn = document.getElementById('logout_button');
-    logoutBtn.addEventListener('click',logoutBtnClick,true);
+    logoutBtn.addEventListener('click', logoutBtnClick, true);
     wsClient.init(host, {
          open       : joinAnonymous
         ,message    : changeView
