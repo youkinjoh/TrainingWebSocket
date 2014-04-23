@@ -18,7 +18,7 @@ if ('development' == app.get('env')) {
 }
 
 var server = http.createServer(app);
-var wsserver = new WebSocketServer({
+var wsserver = new WebSocketServer( {
   'server': server,
   'path': '/'
 });

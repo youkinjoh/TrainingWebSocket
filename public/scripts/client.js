@@ -11,17 +11,17 @@ var wsClient = {
         handlers = handlers || {};
         this.ws = new WebSocket(url);
         if ('message' in handlers) {
-            this.ws.addEventListener('message',handlers['message'],true);
+            this.ws.addEventListener('message', handlers['message'], true);
         }
         if ('open' in handlers) {
-            this.ws.addEventListener('open',handlers['open'],true);
+            this.ws.addEventListener('open', handlers['open'], true);
         }
         if ('close' in handlers) {
-            this.ws.addEventListener('close',handlers['close'],true);
+            this.ws.addEventListener('close', handlers['close'], true);
         }
         
     },
-    sendMessage: function(msg,func) {
+    sendMessage: function(msg, func) {
         this.ws.send(msg);
         //TODO ChangeViewをここからなくして疎結合にすること
         func(msg);
@@ -30,7 +30,7 @@ var wsClient = {
 
 var sendBtnClick = function() {
     var inputText = document.getElementById('input_text').value;
-    wsClient.sendMessage(inputText,changeView);
+    wsClient.sendMessage(inputText, changeView);
 };
 
 var loginBtnClick = function() {
@@ -63,9 +63,9 @@ var joinAnonymous = function(event) {
 var entryPoint = function() {
     var host = 'ws://localhost:3000';
     var sendBtn = document.getElementById('send_button');
-    sendBtn.addEventListener('click',sendBtnClick,true);
+    sendBtn.addEventListener('click', sendBtnClick, true);
     var loginBtn = document.getElementById('login_button');
-    loginBtn.addEventListener('click',loginBtnClick,true);
+    loginBtn.addEventListener('click', loginBtnClick,true);
     var logoutBtn = document.getElementById('logout_button');
     logoutBtn.addEventListener('click',logoutBtnClick,true);
     wsClient.init(host, {
@@ -76,4 +76,4 @@ var entryPoint = function() {
     });
 };
 
-document.getElementById("contents").addEventListener('load',entryPoint,true);
+document.getElementById("contents").addEventListener('load', entryPoint, true);
