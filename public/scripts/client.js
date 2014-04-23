@@ -56,7 +56,8 @@ var changeView = function(msg) {
     }
     var addElement = document.createElement('div');
     addElement.appendChild(document.createTextNode(msg));
-    document.getElementById('chatlog').appendChild(addElement);
+    var outputChatLog = document.getElementById('chatlog');
+    outputChatLog.insertBefore(addElement, outputChatLog.firstChild);
 };
 
 var joinAnonymous = function(event) {
