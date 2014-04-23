@@ -13,10 +13,10 @@ var wsClient = {
         if ('message' in handlers) {
             this.ws.addEventListener('message',handlers['message'],true);
         }
-        if('open' in handlers){
+        if('open' in handlers) {
             this.ws.addEventListener('open',handlers['open'],true);
         }
-        if('close' in handlers){
+        if('close' in handlers) {
             this.ws.addEventListener('close',handlers['close'],true);
         }
     },
@@ -26,27 +26,27 @@ var wsClient = {
     }
 };
 
-var sendBtnClick = function(){
+var sendBtnClick = function() {
     var inputText = document.getElementById('input_text').value;
     wsClient.sendMessage(inputText);
 };
 
-var loginBtnClick = function(){
+var loginBtnClick = function() {
     var inputText = document.getElementById('login_name').value;
     wsClient.sendMessage(inputText+' login');
 };
 
-var logoutBtnClick = function(){
+var logoutBtnClick = function() {
     wsClient.sendMessage('Quit...');
 };
 
-var closeWs = function(){
+var closeWs = function() {
     wsClient.sendMessage('anonymous Quit');
     wsClient.ws.close();
 };
 
-var changeView = function(msg){
-    if(msg.type == 'message'){
+var changeView = function(msg) {
+    if(msg.type == 'message') {
         msg = msg.data;
     }
     var addElement = document.createElement('div');
@@ -54,14 +54,14 @@ var changeView = function(msg){
     document.getElementById('chatlog').appendChild(addElement);
 };
 
-var joinAnonymous = function(event){
+var joinAnonymous = function(event) {
     event.target.send('Login Anonymous');
 };
-var fromleaveAnonymous = function(event){
+var fromleaveAnonymous = function(event) {
     event.target.send('Logout Anonymous');
 };
 
-var entryPoint = function(){
+var entryPoint = function() {
     var host = 'ws://localhost:3000';
     var sendBtn = document.getElementById('send_button');
     sendBtn.addEventListener('click',sendBtnClick,true);
@@ -72,12 +72,8 @@ var entryPoint = function(){
     wsClient.init(host, {
          open   : joinAnonymous
         ,message: changeView
-        ,close  : closeWs
+        ,close  : fromleaveAnonymous
     });
 };
-
-
-
-
 
 document.getElementById("contents").addEventListener('load',entryPoint,true);
