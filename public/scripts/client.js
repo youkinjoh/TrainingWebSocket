@@ -76,7 +76,6 @@ var entryPoint = function() {
          open       : joinAnonymous
         ,message    : changeView
         ,close      : closeWs
-        ,sendMessage: changeView
     });
 };
 
