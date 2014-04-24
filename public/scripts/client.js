@@ -11,13 +11,13 @@ var wsClient = {
         handlers = handlers || {};
         this.ws = new WebSocket(url);
         if ('message' in handlers) {
-            this.ws.addEventListener('message', handlers['message'], true);
+            this.ws.addEventListener('message', handlers['message'], false);
         }
         if ('open' in handlers) {
-            this.ws.addEventListener('open', handlers['open'], true);
+            this.ws.addEventListener('open', handlers['open'], false);
         }
         if ('close' in handlers) {
-            this.ws.addEventListener('close', handlers['close'], true);
+            this.ws.addEventListener('close', handlers['close'], false);
         }
         
     },
@@ -67,11 +67,11 @@ var joinAnonymous = function(event) {
 var entryPoint = function() {
     var host = 'ws://localhost:3000';
     var sendBtn = document.getElementById('send_button');
-    sendBtn.addEventListener('click', sendBtnClick, true);
+    sendBtn.addEventListener('click', sendBtnClick, false);
     var loginBtn = document.getElementById('login_button');
-    loginBtn.addEventListener('click', loginBtnClick, true);
+    loginBtn.addEventListener('click', loginBtnClick, false);
     var logoutBtn = document.getElementById('logout_button');
-    logoutBtn.addEventListener('click', logoutBtnClick, true);
+    logoutBtn.addEventListener('click', logoutBtnClick, false);
     wsClient.init(host, {
          open       : joinAnonymous
         ,message    : changeView
