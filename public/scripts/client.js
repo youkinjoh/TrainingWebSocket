@@ -76,4 +76,4 @@ var entryPoint = function() {
   });
 };
 
-document.getElementById("contents").addEventListener('load', entryPoint, true);
+document.getElementById("contents").addEventListener('load', entryPoint, false);
