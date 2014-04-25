@@ -45,7 +45,6 @@ var logoutBtnClick = function() {
 
 var closeWs = function() {
   wsClient.sendMessage('anonymous Quit');
-  wsClient.ws.close();
 };
 
 var changeView = function(msg) {
