@@ -1,16 +1,16 @@
 .output_contents {
-    font-size:12px;
-    width:500px;
-    height:300px;
-    background-color:black;
-    color:white;
-    overflow:scroll;
+  font-size:12px;
+  width:500px;
+  height:300px;
+  background-color:black;
+  color:white;
+  overflow:scroll;
 }
 .input_contents {
-    width:400px;
-    height:30px;
+  width:400px;
+  height:30px;
 }
 .submit_contents {
-    width:100px;
-    height:50px;
+  width:100px;
+  height:50px;
 }
