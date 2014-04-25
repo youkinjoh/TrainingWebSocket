@@ -26,12 +26,13 @@ var wsClient = {
 };
 
 var sendBtnClick = function() {
-  var inputText = document.getElementById('input_text').value;
-  if (inputText == '') {
+  var inputTextAria = document.getElementById('input_text')
+  if (inputTextAria.value == '') {
     alert('Please input message!');
     return;
   }
-  wsClient.sendMessage(inputText, changeView);
+  wsClient.sendMessage(inputTextAria.value, changeView);
+  inputTextAria.value = '';
 };
 
 var loginBtnClick = function() {
