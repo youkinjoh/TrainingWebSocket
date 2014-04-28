@@ -29,7 +29,9 @@ wsserver.on('connection', function(ws) {
   ws.on('message', function(message) {
     conns.forEach(function(conn) {
         try {
-          conn.send(message);
+          if (conn !== ws) {
+              conn.send(message);
+          }
         } catch(e) {
         }
     });
