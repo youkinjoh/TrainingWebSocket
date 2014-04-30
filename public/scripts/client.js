@@ -5,7 +5,7 @@ var wsClient = {
   *sendMessage:引数のテキストをウェブソケットサーバに送信する
   */
   ws: null,
-  loginusername: null,
+  loginusername: 'Anonymous',
   init: function(url, handlers) {
     handlers = handlers || {};
     this.ws = new WebSocket(url);
@@ -20,8 +20,13 @@ var wsClient = {
     }
   },
   sendMessage: function(msg, func) {
-    this.ws.send(msg);
-    func(msg);
+    var testObject = {
+       data: msg.data
+      ,type: msg.type
+      ,speakername: this.loginusername
+    }
+    this.ws.send(JSON.stringify(testObject));
+    func(JSON.stringify(testObject));
   }
 };
 
@@ -31,26 +36,42 @@ var sendBtnClick = function() {
     alert('Please input message!');
     return;
   }
-  wsClient.sendMessage(inputTextAria.value, changeView);
+  wsClient.sendMessage({
+       data: inputTextAria.value
+      ,type: 'message'
+  }, changeView);
   inputTextAria.value = '';
 };
 
 var loginBtnClick = function() {
   var inputText = document.getElementById('login_name').value;
-  wsClient.sendMessage(inputText + ' login');
+  wsClient.loginusername = '[' + inputText + ']';
+  wsClient.sendMessage({
+       data: wsClient.loginusername + ' login'
+      ,type: 'systemlog'
+  });
 };
 
 var logoutBtnClick = function() {
+  wsClient.loginusername = 'Anonymous';
   wsClient.sendMessage('Quit...');
 };
 
 var closeWs = function() {
-  wsClient.sendMessage('anonymous Quit');
+  wsClient.sendMessage({
+       data: 'anonymous Quit'
+      ,type: 'systemlog'
+  });
 };
 
 var changeView = function(msg) {
+  //NOTE 受け取り側はMessageObjectのdataの中身をJSONパースすればよい
+  msg = JSON.parse(msg.data);
   if (msg.type == 'message') {
-    msg = msg.data;
+    msg = msg.speakername + ':' + msg.data;
+  }
+  if (msg.type == 'systemlog') {
+    msg = 'System:' + msg.data;
   }
   var addElement = document.createElement('div');
   addElement.appendChild(document.createTextNode(msg));
@@ -59,7 +80,11 @@ var changeView = function(msg) {
 };
 
 var joinAnonymous = function(event) {
-  event.target.send('Login Anonymous');
+  var loginlog = {
+       data: 'Login Anonymous'
+      ,type: 'systemlog'
+  };
+  wsClient.sendMessage(loginlog);
 };
 
 var entryPoint = function() {
