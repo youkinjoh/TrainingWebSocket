@@ -28,10 +28,10 @@ wsserver.on('connection', function(ws) {
   conns.push(ws);
   ws.on('message', function(message) {
     conns.forEach(function(conn) {
-        try {
-          conn.send(message);
-        } catch(e) {
-        }
+      try {
+        conn.send(message);
+      } catch(e) {
+      }
     });
   });
   ws.on('close', function() {

@@ -24,23 +24,23 @@ var wsClient = {
        data: msg.data
       ,type: msg.type
       ,speakername: this.loginusername
-    }
+    };
     this.ws.send(JSON.stringify(testObject));
     func(JSON.stringify(testObject));
   }
 };
 
 var sendBtnClick = function() {
-  var inputTextAria = document.getElementById('input_text')
-  if (inputTextAria.value == '') {
+  var inputTextArea = document.getElementById('input_text');
+  if (inputTextArea.value == '') {
     alert('Please input message!');
     return;
   }
   wsClient.sendMessage({
-       data: inputTextAria.value
+       data: inputTextArea.value
       ,type: 'message'
   }, changeView);
-  inputTextAria.value = '';
+  inputTextArea.value = '';
 };
 
 var loginBtnClick = function() {
