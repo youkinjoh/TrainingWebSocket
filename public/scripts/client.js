@@ -37,8 +37,8 @@ var sendBtnClick = function() {
     return;
   }
   wsClient.sendMessage({
-       data: inputTextArea.value
-      ,type: 'message'
+     data: inputTextArea.value
+    ,type: 'message'
   }, changeView);
   inputTextArea.value = '';
 };
@@ -47,8 +47,8 @@ var loginBtnClick = function() {
   var inputText = document.getElementById('login_name').value;
   wsClient.loginusername = '[' + inputText + ']';
   wsClient.sendMessage({
-       data: wsClient.loginusername + ' login'
-      ,type: 'systemlog'
+     data: wsClient.loginusername + ' login'
+    ,type: 'systemlog'
   });
 };
 
@@ -59,13 +59,12 @@ var logoutBtnClick = function() {
 
 var closeWs = function() {
   wsClient.sendMessage({
-       data: 'anonymous Quit'
-      ,type: 'systemlog'
+     data: 'anonymous Quit'
+    ,type: 'systemlog'
   });
 };
 
 var changeView = function(msg) {
-  //NOTE 受け取り側はMessageObjectのdataの中身をJSONパースすればよい
   msg = JSON.parse(msg.data);
   if (msg.type == 'message') {
     msg = msg.speakername + ':' + msg.data;
@@ -81,8 +80,8 @@ var changeView = function(msg) {
 
 var joinAnonymous = function(event) {
   var loginlog = {
-       data: 'Login Anonymous'
-      ,type: 'systemlog'
+     data: 'Login Anonymous'
+    ,type: 'systemlog'
   };
   wsClient.sendMessage(loginlog);
 };
@@ -96,9 +95,9 @@ var entryPoint = function() {
   var logoutBtn = document.getElementById('logout_button');
   logoutBtn.addEventListener('click', logoutBtnClick, false);
   wsClient.init(host, {
-     open   : joinAnonymous
+     open: joinAnonymous
     ,message: changeView
-    ,close  : closeWs
+    ,close: closeWs
   });
 };
 
