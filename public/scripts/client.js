@@ -88,7 +88,7 @@ var joinAnonymous = function(event) {
 };
 
 var entryPoint = function() {
-  var host = 'ws://localhost:3000';
+  var host = 'ws://' + window.location.host;
   var sendBtn = document.getElementById('send_button');
   sendBtn.addEventListener('click', sendBtnClick, false);
   var loginBtn = document.getElementById('login_button');
