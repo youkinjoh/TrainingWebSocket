@@ -19,14 +19,13 @@ var wsClient = {
       this.ws.addEventListener('close', handlers['close'], false);
     }
   },
-  sendMessage: function(msg, func) {
+  sendMessage: function(msg) {
     var testObject = {
        data: msg.data
       ,type: msg.type
       ,speakername: this.loginusername
     };
     this.ws.send(JSON.stringify(testObject));
-    func(JSON.stringify(testObject));
   }
 };
 
@@ -39,7 +38,7 @@ var sendBtnClick = function() {
   wsClient.sendMessage({
      data: inputTextArea.value
     ,type: 'message'
-  }, changeView);
+  });
   inputTextArea.value = '';
 };
 
@@ -54,7 +53,10 @@ var loginBtnClick = function() {
 
 var logoutBtnClick = function() {
   wsClient.loginusername = 'Anonymous';
-  wsClient.sendMessage('Quit...');
+  wsClient.sendMessage({
+     data: 'Quit...'
+    ,type: 'systemlog'
+  });
 };
 
 var closeWs = function() {
