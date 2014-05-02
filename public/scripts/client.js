@@ -6,6 +6,7 @@ var wsClient = {
   */
   ws: null,
   loginusername: 'Anonymous',
+  roomname: 'default',
   init: function(url, handlers) {
     handlers = handlers || {};
     this.ws = new WebSocket(url);
@@ -24,6 +25,7 @@ var wsClient = {
        data: msg.data
       ,type: msg.type
       ,speakername: this.loginusername
+      ,roomname: this.roomname
     };
     this.ws.send(JSON.stringify(sendContents));
   }
@@ -85,6 +87,28 @@ var joinAnonymous = function(event) {
   wsClient.sendMessage(loginlog);
 };
 
+var roominBtnClick = function() {
+  var inputroomname = document.getElementById('room_name');
+  if(inputroomname.value == '') {
+    alert('Please input room name!');
+    return;
+  }
+  wsClient.roomname = inputroomname.value;
+  wsClient.sendMessage({
+     data: wsClient.loginusername + ' login'
+    ,type: 'systemlog'
+  });
+  changeRoomNameOutput();
+};
+
+var changeRoomNameOutput = function() {
+  var addElement = document.createElement('div');
+  addElement.appendChild(document.createTextNode('You are in Room:' + wsClient.roomname));
+  addElement.id = 'nowroom';
+  var outputRoomAria = document.getElementById('nowroom');
+  outputRoomAria.parentNode.replaceChild(addElement, outputRoomAria);
+};
+
 var entryPoint = function() {
   var host = 'ws://' + window.location.host;
   var sendBtn = document.getElementById('send_button');
@@ -93,6 +117,8 @@ var entryPoint = function() {
   loginBtn.addEventListener('click', loginBtnClick, false);
   var logoutBtn = document.getElementById('logout_button');
   logoutBtn.addEventListener('click', logoutBtnClick, false);
+  var roominBtn = document.getElementById('roomin_button');
+  roominBtn.addEventListener('click', roominBtnClick, false);
   wsClient.init(host, {
      open: joinAnonymous
     ,message: changeView
