@@ -52,11 +52,11 @@ var loginBtnClick = function() {
 };
 
 var logoutBtnClick = function() {
-  wsClient.loginusername = 'Anonymous';
   wsClient.sendMessage({
-     data: 'Quit...'
+     data: wsClient.loginusername + ' logout'
     ,type: 'systemlog'
   });
+  wsClient.loginusername = 'Anonymous';
 };
 
 //CHANGES セッションが途中で切れたときの処理を追加する可能性があるため函数自体は残す
