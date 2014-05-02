@@ -59,11 +59,8 @@ var logoutBtnClick = function() {
   });
 };
 
+//CHANGES セッションが途中で切れたときの処理を追加する可能性があるため函数自体は残す
 var closeWs = function() {
-  wsClient.sendMessage({
-     data: 'anonymous Quit'
-    ,type: 'systemlog'
-  });
 };
 
 var changeView = function(msg) {
