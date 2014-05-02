@@ -20,12 +20,12 @@ var wsClient = {
     }
   },
   sendMessage: function(msg) {
-    var testObject = {
+    var sendContents = {
        data: msg.data
       ,type: msg.type
       ,speakername: this.loginusername
     };
-    this.ws.send(JSON.stringify(testObject));
+    this.ws.send(JSON.stringify(sendContents));
   }
 };
 
