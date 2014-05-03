@@ -25,11 +25,20 @@ var wsserver = new WebSocketServer( {
 
 var conns = [];
 wsserver.on('connection', function(ws) {
-  conns.push(ws);
+  conns.push({
+     socket: ws
+    ,roomname: 'default'
+  });
   ws.on('message', function(message) {
     conns.forEach(function(conn) {
       try {
-        conn.send(message);
+        var jsonMessage = JSON.parse(message);
+        if (conn.socket === ws && conn.roomname != jsonMessage.roomname) {
+          conn.roomname = jsonMessage.roomname;
+        }
+        if (conn.roomname == jsonMessage.roomname) {
+          conn.socket.send(message);
+        }
       } catch(e) {
       }
     });
